@@ -1,0 +1,17 @@
+version: "0.1"
+services:
+  nodebb:
+    container_name: nodebbProduction
+    restart: always
+    build: .
+    ports:
+      - "4567:4567"
+    links:
+      - mongo
+  mongo:
+    container_name: mongoNodebb
+    image: mongo
+    volumes:
+      - ./install：/data/db
+    ports:
+      - "27017:27017"
