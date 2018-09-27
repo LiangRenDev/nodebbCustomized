@@ -27,9 +27,9 @@ server
 
 
 server {
-
-    ssl_dhparam /etc/ssl/certs/dhparam.pem;
-
+    #Comment temporialy for docker
+    #ssl_dhparam /etc/ssl/certs/dhparam.pem;
+    #Comment temporialy for docker
 	location / {
         
 	    proxy_pass http://localhost:4567;
@@ -42,9 +42,9 @@ server {
    
 	}
      
-
-    listen 443 ssl; # managed by Certbot
-    #Comment temporialy for docker
+     #Comment temporialy for docker
+    #listen 443 ssl; # managed by Certbot
+   
     #ssl_certificate /etc/letsencrypt/live/leon-ren.com/fullchain.pem; # managed by Certbot
     #ssl_certificate_key /etc/letsencrypt/live/leon-ren.com/privkey.pem; # managed by Certbot
     #include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
