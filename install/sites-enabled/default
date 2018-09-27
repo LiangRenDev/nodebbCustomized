@@ -32,7 +32,7 @@ server {
 
 	location / {
         
-	proxy_pass http://localhost:5000;
+	    proxy_pass http://localhost:4567;
         proxy_http_version 1.1;
         proxy_set_header  Host $host;
         proxy_set_header  X-Real-IP $remote_addr;
@@ -44,9 +44,11 @@ server {
      
 
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/leon-ren.com/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/leon-ren.com/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    #Comment temporialy for docker
+    #ssl_certificate /etc/letsencrypt/live/leon-ren.com/fullchain.pem; # managed by Certbot
+    #ssl_certificate_key /etc/letsencrypt/live/leon-ren.com/privkey.pem; # managed by Certbot
+    #include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    #Comment temporialy for docker
 
 
     # Redirect non-https traffic to https
