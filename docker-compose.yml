@@ -12,7 +12,7 @@ services:
     container_name: mongoNodebb
     image: mongo
     volumes:
-      - ./install：/data/db
+      - ./install/data：/data/db
     ports:
       - "27017:27017"
   nginx:
