@@ -4,8 +4,10 @@ services:
     container_name: nodebbProduction
     restart: always
     build: .
-    ports:
-      - "4567:4567"
+ #  ports:
+ #    - "4567:4567"
+    expose:
+      - "4567"
     links:
       - mongo
   mongo:
@@ -13,8 +15,11 @@ services:
     image: mongo
     volumes:
       - ./install/data：/data/db
-    ports:
-      - "27017:27017"
+    expose:
+      - "27017"
+ #   ports:
+ #     - "27017:27017"
+
   nginx:
     container_name: nginxProduction
     image: nginx:latest
