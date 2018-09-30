@@ -19,32 +19,41 @@ server
     listen 80 default_server;
 	listen [::]:80 default_server;
 	server_name bbs.localbitcoin.co.nz;
-    return 301 https://$server_name$request_uri;
-
+#    return 301 https://$server_name$request_uri;
+    location / {
+        
+    proxy_pass http://nodebb:4567;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+   
+    }
 }
 
 
 
 
-server {
-    ssl_dhparam /etc/ssl/certs/dhparam.pem;
-	location / {
+#server {
+#    ssl_dhparam /etc/ssl/certs/dhparam.pem;
+#	location / {
         
-	    proxy_pass http://nodebb:4567;
-        proxy_http_version 1.1;
-        proxy_set_header  Host $host;
-        proxy_set_header  X-Real-IP $remote_addr;
-        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header  X-Forwarded-Proto $scheme;
-        proxy_set_header Connection keep-alive;
+#	    proxy_pass http://nodebb:4567;
+#        proxy_http_version 1.1;
+#        proxy_set_header  Host $host;
+#        proxy_set_header  X-Real-IP $remote_addr;
+#        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+#        proxy_set_header  X-Forwarded-Proto $scheme;
+#        proxy_set_header Connection keep-alive;
    
-	}
+#	}
      
      #Comment temporialy for docker
-     listen 443 ssl; # managed by Certbot
+#     listen 443 ssl; # managed by Certbot
    
-     ssl_certificate /etc/letsencrypt/live/bbs.localbitcoin.co.nz/fullchain.pem; # managed by Certbot
-     ssl_certificate_key /etc/letsencrypt/live/bbs.localbitcoin.co.nz/privkey.pem; # managed by Certbot
+#     ssl_certificate /etc/letsencrypt/live/bbs.localbitcoin.co.nz/fullchain.pem; # managed by Certbot
+#     ssl_certificate_key /etc/letsencrypt/live/bbs.localbitcoin.co.nz/privkey.pem; # managed by Certbot
     #Comment temporialy for docker
     #include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     #Comment temporialy for docker
