@@ -19,17 +19,16 @@ server
     listen 80 default_server;
 	listen [::]:80 default_server;
 	server_name bbs.localbitcoin.co.nz;
-#    return 301 https://$server_name$request_uri;
-    location / {
+    return 301 https://$server_name$request_uri;
+#    location / {
         
-    proxy_pass http://nodebb:4567;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
+#    proxy_pass http://nodebb:4567;
+#        proxy_set_header Upgrade $http_upgrade;
+#        proxy_set_header Connection 'upgrade';
+#        proxy_set_header Host $host;
+#        proxy_cache_bypass $http_upgrade;
    
-    }
+#    }
 }
 
 
