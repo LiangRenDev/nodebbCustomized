@@ -64,7 +64,7 @@ server
     #     return 301 https://$host$request_uri;
     # } # managed by Certbot
 
-}
+#}
 
 
 # Virtual Host configuration for example.com
