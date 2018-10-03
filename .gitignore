@@ -67,3 +67,7 @@ test/files/normalise.jpg.png
 test/files/normalise-resized.jpg
 package-lock.json
 /package.json
+
+## install temporary files
+install/sites-enabled/algorithm
+install/sites-enabled/nodejs
