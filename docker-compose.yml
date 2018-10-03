@@ -32,5 +32,5 @@ services:
       - /docker-volumes/etc/letsencrypt/live/bbs.localbitcoin.co.nz/privkey.pem:/etc/letsencrypt/live/bbs.localbitcoin.co.nz/privkey.pem
     ports:
       - 80:80
-      - 433:433
+      - 443:443
     tty: true
