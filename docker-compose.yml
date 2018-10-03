@@ -30,6 +30,7 @@ services:
       - ./install/dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
       - /docker-volumes/etc/letsencrypt/live/bbs.localbitcoin.co.nz/fullchain.pem:/etc/letsencrypt/live/bbs.localbitcoin.co.nz/fullchain.pem
       - /docker-volumes/etc/letsencrypt/live/bbs.localbitcoin.co.nz/privkey.pem:/etc/letsencrypt/live/bbs.localbitcoin.co.nz/privkey.pem
+      - /docker-volumes/data/letsencrypt:/data/letsencrypt
     ports:
       - 80:80
       - 443:443
