@@ -19,6 +19,8 @@ server
     listen 80 default_server;
 	listen [::]:80 default_server;
 	server_name bbs.localbitcoin.co.nz;
+
+    root /var/www/bbs.localbitcoin.co.nz/html;
 #   return 301 https://$server_name$request_uri;
     location / {      
          proxy_pass http://nodebb:4567;
@@ -29,7 +31,7 @@ server
     }
 
     location ~ /.well-known/acme-challenge {
-        allow all;
+         try_files $uri =404;
     }
 }
 
