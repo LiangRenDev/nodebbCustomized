@@ -21,14 +21,14 @@ server
 	server_name bbs.localbitcoin.co.nz;
 
     root /var/www/bbs.localbitcoin.co.nz/html;
-#   return 301 https://$server_name$request_uri;
-    location / {      
-         proxy_pass http://nodebb:4567;
-         proxy_set_header Upgrade $http_upgrade;
-         proxy_set_header Connection 'upgrade';
-         proxy_set_header Host $host;
-         proxy_cache_bypass $http_upgrade;
-    }
+    return 301 https://$server_name$request_uri;
+ #   location / {      
+ #        proxy_pass http://nodebb:4567;
+ #        proxy_set_header Upgrade $http_upgrade;
+ #        proxy_set_header Connection 'upgrade';
+ #        proxy_set_header Host $host;
+ #        proxy_cache_bypass $http_upgrade;
+ #   }
 
     location ~ /.well-known/acme-challenge {
          try_files $uri =404;
@@ -38,36 +38,54 @@ server
 
 
 
-#server {
-#    ssl_dhparam /etc/ssl/certs/dhparam.pem;
-#	location / {
-        
-#	    proxy_pass http://nodebb:4567;
-#        proxy_http_version 1.1;
-#        proxy_set_header  Host $host;
-#        proxy_set_header  X-Real-IP $remote_addr;
-#        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-#        proxy_set_header  X-Forwarded-Proto $scheme;
-#        proxy_set_header Connection keep-alive;
-   
-#	}
-     
-     #Comment temporialy for docker
-#     listen 443 ssl; # managed by Certbot
-   
-#     ssl_certificate /etc/letsencrypt/live/bbs.localbitcoin.co.nz/fullchain.pem; # managed by Certbot
-#     ssl_certificate_key /etc/letsencrypt/live/bbs.localbitcoin.co.nz/privkey.pem; # managed by Certbot
-    #Comment temporialy for docker
-    #include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    #Comment temporialy for docker
+server {
+    listen 443 ssl http2; # managed by Certbot
+    listen [::]:443 ssl http2;
+    server_name bbs.localbitcoin.co.nz;
 
+    server_tokens off;
+
+    ssl on;
+
+    ssl_certificate /etc/letsencrypt/live/bbs.localbitcoin.co.nz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/bbs.localbitcoin.co.nz/privkey.pem; # managed by Certbot
+
+    ssl_buffer_size 8k;
+    
+    ssl_dhparam /etc/ssl/certs/dhparam-2048.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+    ssl_prefer_server_ciphers on;
+
+    ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
+
+    ssl_ecdh_curve secp384r1;
+    ssl_session_tickets off;
+
+    # OCSP stapling
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 8.8.8.8;
+
+	location / {
+        
+	    proxy_pass http://nodebb:4567;
+        proxy_http_version 1.1;
+        proxy_set_header  Host $host;
+        proxy_set_header  X-Real-IP $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header  X-Forwarded-Proto $scheme;
+        proxy_set_header Connection keep-alive;
+   
+	}
+    
 
     # Redirect non-https traffic to https
     # if ($scheme != "https") {
     #     return 301 https://$host$request_uri;
     # } # managed by Certbot
 
-#}
+}
 
 
 # Virtual Host configuration for example.com
